@@ -7,15 +7,15 @@ import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 
-public class OrderServiceImpl implements OrderService{
-    private  final MemberRepository memberRepository = new MemoryMemberRepository();
-    //private  final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    
-    //인터페이스에 난 해당 클래스 사용할거라고 선언 방식 new RateDiscountPolicy();
-    //private  final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+public class OrderServiceImpl implements OrderService {
 
-    //인터페이스 선언 후 자동으로 클래스 선언될 수 있도록 설정이 필요
-    private  DiscountPolicy discountPolicy;
+    private  final MemberRepository memberRepository;
+    private  final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService{
         Member member = memberRepository.findById(memberId);
         int discountPrice = discountPolicy.discount(member, itemPrice);
 
-        return  new Order(memberId,itemName,itemPrice,discountPrice);
+        return new Order(memberId,itemName,itemPrice,discountPrice);
 
     }
 }
