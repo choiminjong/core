@@ -1,4 +1,6 @@
 package hello.core.member;
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 
 /*
@@ -10,6 +12,7 @@ MemberRepository 인터페이스를선언해놓은 save,findById 함수를 호�
 
 import java.util.HashMap;
 
+@Component
 public class MemoryMemberRepository implements MemberRepository{
 
     private static Map<Long, Member> store = new HashMap<>();
